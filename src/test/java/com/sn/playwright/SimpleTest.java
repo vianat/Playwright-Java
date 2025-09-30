@@ -2,6 +2,7 @@ package com.sn.playwright;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.*;
 import java.util.Arrays;
@@ -9,38 +10,12 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+@UsePlaywright(HeadlessChromeOptions.class)
 public class SimpleTest{
 
-    private static Playwright playwright;
-    private static Browser browser;
-    private static BrowserContext browserContext;
-    Page page;
-
-    @BeforeAll
-    public static void setupBrowser(){
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions()
-                        .setHeadless(false)
-                        .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
-        );
-        browserContext = browser.newContext();
-        playwright.selectors().setTestIdAttribute("data-test");
-    }
-
-    @BeforeEach
-    public void beforeEach(){
-        page = browserContext.newPage();
-    }
-
-    @AfterAll
-    public static void tearDown(){
-        browser.close();
-        playwright.close();
-    }
-
+    @DisplayName("Search for pliers")
     @Test
-    void shouldShowPageTitle( ){
+    void shouldShowPageTitle(Page page){
         page.navigate("https://practicesoftwaretesting.com");
 
         String title = page.title();
@@ -49,7 +24,7 @@ public class SimpleTest{
     }
 
     @Test
-    void shouldSearchByKeyword(){
+    void shouldSearchByKeyword(Page page){
         page.navigate("https://practicesoftwaretesting.com");
 
         page.locator("[placeholder=Search]").fill("Pliers");
@@ -61,7 +36,7 @@ public class SimpleTest{
     }
 
     @Test
-    void filteringSearchResult( ){
+    void filteringSearchResult(Page page){
         page.navigate("https://practicesoftwaretesting.com");
 
         page.getByPlaceholder("Search").fill("Pliers");
