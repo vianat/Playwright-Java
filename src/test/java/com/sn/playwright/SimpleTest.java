@@ -1,16 +1,15 @@
 package com.sn.playwright;
 
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.*;
-import java.util.Arrays;
+
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-@UsePlaywright(HeadlessChromeOptions.class)
+@UsePlaywright(ChromeOptions.class)
 public class SimpleTest{
 
     @DisplayName("Search for pliers")
@@ -23,6 +22,7 @@ public class SimpleTest{
 
     }
 
+    @DisplayName("Check search result")
     @Test
     void shouldSearchByKeyword(Page page){
         page.navigate("https://practicesoftwaretesting.com");
@@ -35,8 +35,9 @@ public class SimpleTest{
 
     }
 
+    @DisplayName("filter search result")
     @Test
-    void filteringSearchResult(Page page){
+    void filterSearchResult(Page page){
         page.navigate("https://practicesoftwaretesting.com");
 
         page.getByPlaceholder("Search").fill("Pliers");

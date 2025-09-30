@@ -5,10 +5,9 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.junit.UsePlaywright;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
 import java.util.List;
 
-@UsePlaywright(HeadlessChromeOptions.class)
+@UsePlaywright(ChromeOptions.class)
 public class SimpleFormTest {
 
     @Test

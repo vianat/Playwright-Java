@@ -6,7 +6,7 @@ import com.microsoft.playwright.junit.OptionsFactory;
 
 import java.util.Arrays;
 
-public class HeadlessChromeOptions implements OptionsFactory {
+public class ChromeOptions implements OptionsFactory {
 
     @Override
     public Options getOptions() {
