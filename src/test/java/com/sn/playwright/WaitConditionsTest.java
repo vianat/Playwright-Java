@@ -94,6 +94,20 @@ public class WaitConditionsTest {
 
             assertThat(page.getByRole(AriaRole.ALERT)).isVisible();
             assertThat(page.getByRole(AriaRole.ALERT)).hasText("Product added to shopping cart.");
+
+            page.waitForCondition( () -> page.getByRole(AriaRole.ALERT).isHidden());
+        }
+
+        @DisplayName("should update cart item count")
+        @Test
+        void shouldUpdateCartItemCount(Page page){
+
+            page.getByText("Bolt Cutters").click();
+            page.getByText("Add to cart").click();
+
+            page.waitForCondition( () -> page.getByTestId("cart-quantity").textContent().equals("1"));
+
+//            page.waitForSelector("[data-test=cart-quantity]:has-text('1')");
         }
     }
 }
