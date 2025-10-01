@@ -103,5 +103,4 @@ public class SimpleTest{
         Assertions.assertThat(productNames).isSortedAccordingTo(Comparator.reverseOrder());
     }
 
-
 }
