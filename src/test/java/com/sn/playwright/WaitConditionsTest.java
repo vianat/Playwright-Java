@@ -42,4 +42,40 @@ public class WaitConditionsTest {
         Assertions.assertThat(productImagesTitles).contains("Combination Pliers", "Bolt Cutters", "Hammer");
     }
 
+    @Nested
+    class AutomaticWaits{
+        @BeforeEach
+        void openHomePage(Page page) {
+            page.navigate("https://practicesoftwaretesting.com");
+        }
+
+        @DisplayName("wait for filter checkbox")
+        @Test
+        void waitForFilterCheckbox(Page page){
+
+            var screwdriverFilter = page.getByLabel("Screwdriver");
+            screwdriverFilter.click();
+
+            assertThat(screwdriverFilter).isChecked();
+        }
+
+        @DisplayName("should filter by category")
+        @Test
+        void shouldFilterByCategory(Page page){
+
+            page.getByRole(AriaRole.MENUBAR).getByText("Categories").click();
+            page.getByRole(AriaRole.MENUBAR).getByText("Power Tools").click();
+
+            page.waitForSelector(".card");
+
+            // or explicit wait 2 sec
+//            page.waitForSelector(".card", new Page.WaitForSelectorOptions()
+//                    .setState(WaitForSelectorState.VISIBLE).setTimeout(2000));
+
+            var filteredProducts = page.getByTestId("product-name").allInnerTexts();
+
+            Assertions.assertThat(filteredProducts).contains("Sheet Sander");
+        }
+    }
+
 }
