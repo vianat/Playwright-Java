@@ -78,4 +78,22 @@ public class WaitConditionsTest {
         }
     }
 
+    @Nested
+    class WaitFoeElementsAppearAndDisappear{
+        @BeforeEach
+        void openHomePage(Page page) {
+            page.navigate("https://practicesoftwaretesting.com");
+        }
+
+        @DisplayName("wait for filter checkbox")
+        @Test
+        void waitFoeElementsAppearAndDisappear(Page page){
+
+            page.getByText("Bolt Cutters").click();
+            page.getByText("Add to cart").click();
+
+            assertThat(page.getByRole(AriaRole.ALERT)).isVisible();
+            assertThat(page.getByRole(AriaRole.ALERT)).hasText("Product added to shopping cart.");
+        }
+    }
 }
